@@ -1,19 +1,22 @@
 import React from 'react';
-import {Block, Button} from '../../components';
+import { Route } from 'react-router-dom';
+
+import {LoginForm, RegisterForm} from '../../modules';
 
 import './Auth.scss'
+import {Routes} from 'react-router';
 
 
 const Auth = () => (
+
 	<section className='auth'>
 		<div className='auth-content'>
-			<div className='auth-top'>
-				<h2 className='title auth-top__title'>Enter to account</h2>
-				<p className='desc auth-top__desc'>Please, enter to your account</p>
-			</div>
-			<Block>
-				<Button type='primary' size='large'>Hello</Button>
-			</Block>
+			// todo routes doesn't work
+			{/*<Routes>*/}
+			{/*	<Route exact path={['/', '/login']} element={<LoginForm/>}/>*/}
+			{/*	<Route ecact path='/signup' element={<RegisterForm/>}/>*/}
+			{/*</Routes>*/}
+			<RegisterForm/>
 		</div>
 	</section>
 );
