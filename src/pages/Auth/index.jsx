@@ -3,20 +3,15 @@ import { Route } from 'react-router-dom';
 
 import {LoginForm, RegisterForm} from '../../modules';
 
-import './Auth.scss'
-import {Routes} from 'react-router';
+import './Auth.scss';
 
 
 const Auth = () => (
 
 	<section className='auth'>
 		<div className='auth-content'>
-			// todo routes doesn't work
-			{/*<Routes>*/}
-			{/*	<Route exact path={['/', '/login']} element={<LoginForm/>}/>*/}
-			{/*	<Route ecact path='/signup' element={<RegisterForm/>}/>*/}
-			{/*</Routes>*/}
-			<RegisterForm/>
+			<Route exact path={['/', '/login']} component={LoginForm}/>
+			<Route ecact path='/signup' component={RegisterForm}/>
 		</div>
 	</section>
 );

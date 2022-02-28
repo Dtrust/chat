@@ -1,0 +1,64 @@
+@import "./src/styles/variables";
+
+
+.message{
+  margin-bottom: 40px;
+  display: flex;
+  align-items: flex-end;
+  &-avatar{
+    margin-right: 10px;
+    &__img{
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+    }
+  }
+  &-content{
+    position: relative;
+    &__bubble{
+      max-width: 440px;
+      padding: 15px;
+      border-radius: 12px 12px 12px 0;
+      background: $--color-main;
+      box-shadow: 0 5px 5px rgba(54, 116, 255, .2);
+    }
+    &__text{
+      line-height: 1.2;
+      color: rgba(255, 255, 255, 1)
+    }
+    &__date{
+      position: absolute;
+      left: 0;
+      bottom: -18px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: .5;
+    }
+  }
+  &.message{
+    &--my{
+      flex-direction: row-reverse;
+      & .message{
+        &-avatar{
+          margin-right: 0;
+          margin-left: 10px;
+        }
+        &-content{
+          &__bubble{
+            border: 1px solid #ececec;
+            border-radius: 12px 12px 0 12px;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 4px rgba(0, 0, 0, .02);
+          }
+          &__text{
+            color: #020202;
+          }
+          &__date{
+            left: unset;
+            right: 0;
+          }
+        }
+      }
+    }
+  }
+}
