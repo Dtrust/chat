@@ -7,8 +7,8 @@ import {Auth, Home} from './pages';
 class App extends Component {
     render() {
         return <div className="wrapper">
-            <Route ecact path={['/', '/login']} component={Auth}/>
-            <Route ecact path='/im' component={Home}/>
+            <Route exact path={['/', '/login', '/signup']} component={Auth}/>
+            <Route exact path='/im' component={Home}/>
         </div>
     }
 }

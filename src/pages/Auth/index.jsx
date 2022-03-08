@@ -7,11 +7,10 @@ import './Auth.scss';
 
 
 const Auth = () => (
-
 	<section className='auth'>
 		<div className='auth-content'>
 			<Route exact path={['/', '/login']} component={LoginForm}/>
-			<Route ecact path='/signup' component={RegisterForm}/>
+			<Route exact path='/signup' component={RegisterForm}/>
 		</div>
 	</section>
 );
