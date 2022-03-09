@@ -1,45 +1,51 @@
 import React from 'react';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import readIcon from '../../assets/img/readed.svg';
-import noReadIcon from '../../assets/img/noreaded.svg';
+import {ReadIcon, Time} from '../../components';
 
 import './Message.scss'
 
 
-const Message = ({ user, avatar, text, date, isMe, isRead, attachments }) => (
-	<div className={classNames('message', {'message--my' : isMe})}>
+
+const Message = ({ user, avatar, text, date, isMe, isRead, attachments, isTyping }) => (
+	<div className={
+		classNames('message',
+			{
+				'message--my' : isMe,
+				'message--typing' : isTyping,
+				'message--image' : !text && attachments && attachments.length === 1
+			})
+	}>
 		<div className="message-avatar">
 			<img className='message-avatar__img' src={avatar} alt={`Avatar ${user.fullName}`}/>
 		</div>
 		<div className="message-content">
 			<div className="message-content__bubble">
-				<p className='message-content__text'>{text}</p>
-				<div className='message-content__attachments'>
-					{attachments && attachments.map(item => (
-						<div className='message-content__attachments-item'>
-							<img src={item.url} alt={item.filename}/>
-						</div>
-					))}
-				</div>
+				{text && (<p className='message-content__text'>{text}</p>)}
+				{attachments && (
+					<div className='message-content__attachments'>
+						{attachments.map(item => (
+							<div className='message-content__attachments-item'>
+								<img src={item.url} alt={item.filename}/>
+							</div>
+						))}
+					</div>
+				)}
+				{isTyping && (
+					<div className='message-content--typing'>
+						<span className='dot one'></span>
+						<span className='dot two'></span>
+						<span className='dot three'></span>
+					</div>
+				)}
 			</div>
-			<span className="message-content__date">{formatDistanceToNow(new Date(date), {addSuffix: true})}</span>
-			{isMe && isRead ?(
-				<img
-					className='message-content__icon'
-					src={readIcon}
-					alt='read icon'
-				/>
-			) : (
-				<img
-					className='message-content__icon'
-					src={noReadIcon}
-					alt='no read icon'
-				/>
-			)
+			{date && (
+				<span className="message-content__date">
+					<Time date={date}/>
+				</span>)
 			}
+			<ReadIcon isMe={isMe} isRead={isRead}/>
 		</div>
 	</div>
 );
@@ -54,6 +60,9 @@ Message.propTypes = {
 	text: PropTypes.string,
 	date: PropTypes.string,
 	attachments: PropTypes.array,
+	isTyping: PropTypes.bool,
+	isMe: PropTypes.bool,
+	isRead: PropTypes.bool,
 }
 
 export default Message;

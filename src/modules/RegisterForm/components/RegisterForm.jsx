@@ -4,6 +4,7 @@ import { Form, Input} from 'antd';
 import { UserOutlined, LockOutlined, InfoCircleOutlined } from '@ant-design/icons';
 
 import { Button, Block } from '../../../components';
+import { validateField } from '../../../utils/helpers'
 
 const RegisterForm = props => {
 
@@ -44,10 +45,8 @@ const RegisterForm = props => {
 						</Form.Item>
 						<Form.Item
 							name="email"
-							validateStatus={
-								!touched.email ? '' : errors.email ? 'error' : 'success'
-							}
-							help={!touched.email ? '' : errors.email ? 'error' : 'success'}
+							validateStatus={validateField('email', touched, errors)}
+							help={!touched.email ? '' : errors.email}
 						>
 							<Input
 								prefix={<UserOutlined className="site-form-item-icon" />}
@@ -60,10 +59,8 @@ const RegisterForm = props => {
 						</Form.Item>
 						<Form.Item
 							name="password"
-							validateStatus={
-								!touched.password ? '' : errors.password ? 'error' : 'success'
-							}
-							help={!touched.password ? '' : errors.password ? 'error' : 'success'}
+							validateStatus={validateField('password', touched, errors)}
+							help={!touched.password ? '' : errors.password}
 						>
 							<Input
 								prefix={<LockOutlined className="site-form-item-icon" />}
