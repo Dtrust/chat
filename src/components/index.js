@@ -4,3 +4,5 @@ export { default as Message} from './Message';
 export { default as DialogItem} from './DialogItem';
 export { default as Time} from './Time';
 export { default as ReadIcon} from './ReadIcon';
+export { default as Dialogs} from './Dialogs';
+export { default as Avatar} from './Avatar';

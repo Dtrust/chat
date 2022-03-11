@@ -1,45 +1,41 @@
 import React from 'react';
 import classNames from 'classnames';
+import format from 'date-fns/format'
+import isToday from 'date-fns/isToday'
 
-import {ReadIcon, Time} from '../../components';
+import { ReadIcon, Avatar } from '../../components';
 
 import './DialogItem.scss';
 
 
-const getAvatar = avatar => {
-	if(avatar) {
-		return (
-			<img
-				className='dialogs-item__img'
-				src='https://i.pinimg.com/736x/a1/a4/e5/a1a4e578b75a2cad9024571012b17f14.jpg'
-				alt={`avatar`}
-			/>
-		)
+const getMessageTime = created_at => {
+	if(isToday(new Date(created_at))) {
+		return format(new Date(created_at), 'HH:mm')
 	} else {
-		// todo create avatar from name
+		return format(new Date(created_at), 'dd.MM.yyyy')
 	}
-}
+};
 
-const DialogItem = ({ user, message, date, unread }) => (
+const DialogItem = ({ user, text, created_at, unread, isMe }) => (
 	<div className={classNames('dialogs-item', {'dialogs-item--online': user.isOnline})}>
 		<div className='dialogs-item__avatar'>
-			{getAvatar('https://i.pinimg.com/736x/a1/a4/e5/a1a4e578b75a2cad9024571012b17f14.jpg')}
+			<Avatar user={user} />
 		</div>
 		<div className='dialogs-item__wrap'>
 			<div className='dialogs-item__top'>
 				<p className='dialogs-item__name'>
-					{user.fullname}
+					{user.fullName}
 				</p>
 				<p className='dialogs-item__time'>
-					<Time date={new Date()}/>
+					{getMessageTime(created_at)}
 				</p>
 			</div>
 			<div className='dialogs-item__bottom'>
 				<p className='dialogs-item__message'>
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+					{text}
 				</p>
 				<div className='dialogs-item__icon'>
-					{/*<ReadIcon isMe={true} isRead={false}/>*/}
+					{isMe && <ReadIcon isMe={true} isRead={false}/>}
 					{unread > 0 && (
 						<span className='dialogs-item__icon--mark'>
 							<span className='dialogs-item__icon--count'>{unread > 9 ? '+9' : unread}</span>
