@@ -1,6 +1,17 @@
 @import '~eric-meyer-reset.scss/reset';
 @import '~antd/dist/antd.css';
 
+@import "./src/styles/variables";
+@import "./src/styles/mixins";
+
+
+:root, [data-theme="default"]{
+  --color-main: 234;
+  @include defineColorHSL(--color-primary, $primary-hue, $primary-saturation, $primary-lightness);
+  @include defineColorHSL(--color-second, $second-hue, $second-saturation, $second-lightness);
+  @include defineColorHSL(--color-dark, $dark-hue, $dark-saturation, $dark-lightness);
+  @include defineColorHSL(--color-light, $light-hue, $light-saturation, $light-lightness);
+}
 
 body,
 html,
@@ -9,6 +20,10 @@ html,
   height: 100%;
   color: rgba(32, 32, 32, 1);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+body{
+  background: #f4f7fd;
 }
 
 img{

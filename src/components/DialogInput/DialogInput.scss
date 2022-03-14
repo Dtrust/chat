@@ -1,0 +1,55 @@
+@import "./src/styles/variables";
+@import "./src/styles/mixins";
+
+
+.dialog{
+  &-input{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: $-padding;
+    background: rgba(255, 255, 255, 1);
+    @include flexCenter;
+    &__field{
+      padding-left: 40px!important;
+      padding-right: 70px!important;
+      border-radius: $-border-radius!important;
+    }
+    &__btn,
+    &__actions{
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+      z-index: 2;
+    }
+    &__btn{
+      left: 20px;
+      opacity: .5;
+      &:hover{
+        opacity: 1;
+        & .anticon{
+          color: $--color-main;
+        }
+      }
+    }
+    &__actions{
+      right: 20px;
+      &-btn{
+        opacity: .5;
+        &:not(:last-of-type){
+          margin-right: 10px;
+        }
+        &:hover{
+          opacity: 1;
+          & .anticon{
+            color: $--color-main;
+          }
+        }
+      }
+    }
+    & .anticon{
+      font-size: 20px;
+      transition: $-transition;
+    }
+  }
+}

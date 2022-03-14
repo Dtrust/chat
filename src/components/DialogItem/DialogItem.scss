@@ -1,8 +1,17 @@
+@import "./src/styles/variables";
+@import "./src/styles/mixins";
+
+
 .dialogs{
+  $self: &;
   &-item{
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
+    padding: calc(#{$-padding}) $-padding;
+    cursor: pointer;
+    @include flexCenter;
+    &.active,
+    &:hover{
+      background: #f3f7ff;
+    }
     &__img{
       display: block;
       width: 40px;
@@ -11,6 +20,7 @@
     }
     &__wrap{
       margin-left: 10px;
+      flex: 1;
       //display: flex;
       //flex-direction: column;
       //justify-content: center;
@@ -21,40 +31,40 @@
       align-items: baseline;
     }
     &__name{
-      flex: 1;
+      flex: 70%;
       font-size: 14px;
       font-weight: 500;
     }
     &__time{
+      flex: 30%;
       font-size: 12px;
+      text-align: right;
       opacity: .5;
     }
     &__bottom{
+      position: relative;
       display: flex;
     }
     &__message{
       text-overflow: ellipsis;
       overflow: hidden;
-      width: 260px;
+      width: 230px;
       height: 1rem;
       white-space: nowrap;
       opacity: .5;
     }
     &__icon{
-      position: relative;
-      margin-left: 10px;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translate(0, -50%);
       & img{
-        position: absolute;
-        top: 50%;
-        transform: translate(0, -50%);
         margin-right: 0;
       }
       &--mark{
-        position: absolute;
         width: 18px;
         height: 18px;
-        display: flex;
-        align-items: center;
+        @include flexCenter;
         justify-content: center;
         border-radius: 50%;
         background: rgba(244, 107, 107, 1);
@@ -68,7 +78,7 @@
       }
     }
     &--online{
-      & .dialogs{
+      & #{$self}{
         &-item{
           &__avatar{
             position: relative;

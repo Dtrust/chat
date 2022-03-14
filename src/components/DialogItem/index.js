@@ -35,7 +35,7 @@ const DialogItem = ({ user, text, created_at, unread, isMe }) => (
 					{text}
 				</p>
 				<div className='dialogs-item__icon'>
-					{isMe && <ReadIcon isMe={true} isRead={false}/>}
+					{isMe && <ReadIcon isMe={true} isRead={true}/>}
 					{unread > 0 && (
 						<span className='dialogs-item__icon--mark'>
 							<span className='dialogs-item__icon--count'>{unread > 9 ? '+9' : unread}</span>

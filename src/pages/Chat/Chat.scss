@@ -1,0 +1,151 @@
+@import "./src/styles/variables";
+@import "./src/styles/mixins";
+
+
+.chat{
+  $self: &;
+  display: grid;
+  grid-gap: $-padding;
+  grid-template-columns: 1fr 3fr;
+  grid-template-areas:
+          "sidebar dialog";
+  padding: 10px;
+  height: 100%;
+  overflow: hidden;
+  &-sidebar{
+    grid-area: sidebar;
+    position: relative;
+    border-radius: $-border-radius;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 1);
+    & .sidebar{
+
+      &-header{
+        @include flexCenter;
+        justify-content: space-between;
+        padding: calc(#{$-padding} * 2.2) $-padding;
+        background: rgba(255, 255, 255, 1);
+        &__wrap{
+          @include flexCenter;
+        }
+        &__title{
+          margin-left: 5px;
+        }
+        &__btn{
+          margin-right: 10px;
+          transition: $-transition;
+          &:hover{
+            color: $--color-main;
+          }
+        }
+      }
+
+      &-search{
+        padding: calc(#{$-padding} * 2) $-padding;
+        &__input{
+          border-radius: $-border-radius;
+          overflow: hidden;
+          & input,
+          & button{
+            height: 32px;
+            background: #f7f8f9;
+            border: 0;
+          }
+        }
+      }
+
+      &-contacts{
+        & .dialogs{
+          position: absolute;
+          left: 0;
+          right: 0;
+          width: 100%;
+          height: 100%;
+          overflow-y: overlay;
+          @include scrollBar;
+          &::-webkit-scrollbar-track,
+          &::-webkit-scrollbar-thumb{
+            display: none;
+          }
+          &:hover{
+            &::-webkit-scrollbar-track,
+            &::-webkit-scrollbar-thumb {
+              display: block;
+            }
+          }
+        }
+      }
+
+    }
+  }
+  &-dialog{
+    grid-area: dialog;
+    position: relative;
+    border-radius: $-border-radius;
+    overflow: hidden;
+    & .dialog{
+
+      &-header{
+        position: relative;
+        @include flexCenter;
+        justify-content: center;
+        padding: $-padding;
+        background: rgba(255, 255, 255, 1);
+        box-shadow: $-box-shadow;
+        &__title{
+          margin-bottom: 5px;
+          font-size: 20px;
+          font-weight: 700;
+        }
+        &__status{
+          color: #bfbfbf;
+        }
+        &__btn{
+          position: absolute;
+          right: $-padding;
+          transition: $-transition;
+          &:hover{
+            color: $--color-main;
+          }
+        }
+      }
+
+      &-content{
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: calc(100% - 121px);
+        padding-top: calc(#{$-padding} * 2);
+        padding-left: $-padding;
+        padding-right: $-padding;
+        overflow-y: overlay;
+        @include scrollBar;
+        &::-webkit-scrollbar-track,
+        &::-webkit-scrollbar-thumb{
+          display: none;
+        }
+        &:hover{
+          &::-webkit-scrollbar-track,
+          &::-webkit-scrollbar-thumb {
+            display: block;
+          }
+        }
+        &--empty{
+          @include flexCenter;
+          justify-content: center;
+        }
+      }
+
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .chat{
+    grid-template-columns: 4fr;
+    grid-template-areas:
+            "sidebar"
+            "dialog";
+  }
+}

@@ -1,0 +1,27 @@
+@import "./src/styles/mixins";
+
+
+.status{
+  @include flexCenter;
+  justify-content: center;
+  &::before{
+    content: '';
+    position: relative;
+    top: 2px;
+    display: block;
+    margin-right: 5px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  &--online{
+    &::before{
+      background: #00c980;
+    }
+  }
+  &--offline{
+    &::before{
+      background: red;
+    }
+  }
+}

@@ -93,8 +93,8 @@ const Message = ({ user, avatar, text, audio, date, isMe, isRead, attachments, i
 
 					{attachments && (
 						<div className='message-content__attachments'>
-							{attachments.map(item => (
-								<div className='message-content__attachments-item'>
+							{attachments.map((item, index) => (
+								<div key={index} className='message-content__attachments-item'>
 									<img src={item.url} alt={item.filename}/>
 								</div>
 							))}
@@ -114,7 +114,7 @@ const Message = ({ user, avatar, text, audio, date, isMe, isRead, attachments, i
 						<Time date={new Date(date)}/>
 					</span>)
 				}
-				<ReadIcon isMe={false} isRead={false}/>
+				<ReadIcon isMe={true} isRead={true}/>
 			</div>
 		</div>
 	)
