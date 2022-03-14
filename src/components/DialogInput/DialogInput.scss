@@ -20,7 +20,7 @@
       position: absolute;
       top: 50%;
       transform: translate(0, -50%);
-      z-index: 2;
+      z-index: 1;
     }
     &__btn{
       left: 20px;
@@ -34,9 +34,18 @@
     }
     &__actions{
       right: 20px;
+      @include flexCenter;
       &-btn{
         opacity: .5;
-        &:not(:last-of-type){
+        &.btn-upload{
+          cursor: pointer;
+          & input{
+            width: unset!important;
+            height: unset!important;
+            cursor: pointer;
+          }
+        }
+        &:not(:last-child){
           margin-right: 10px;
         }
         &:hover{

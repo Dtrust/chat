@@ -131,7 +131,8 @@
             display: block;
           }
         }
-        &--empty{
+        &--empty,
+        &--loading{
           @include flexCenter;
           justify-content: center;
         }

@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import {ReadIcon, Time} from '../../components';
+import {ReadIcon, Time, Avatar} from '../../components';
 
 import { convertCurrentTime } from '../../utils/helpers'
 
@@ -83,7 +83,8 @@ const Message = ({ user, avatar, text, audio, date, isMe, isRead, attachments, i
 				})
 		}>
 			<div className="message-avatar">
-				<img className='message-avatar__img' src={avatar} alt={`Avatar ${user.fullName}`}/>
+				<Avatar user={user}/>
+				{/*<img className='message-avatar__img' src={avatar} alt={`Avatar ${user.fullName}`}/>*/}
 			</div>
 			<div className="message-content">
 				<div className="message-content__bubble">

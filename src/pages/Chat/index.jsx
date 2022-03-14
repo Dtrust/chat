@@ -2,12 +2,10 @@ import React from 'react';
 
 import { TeamOutlined, FormOutlined, EllipsisOutlined } from '@ant-design/icons/lib/icons';
 
-import {Messages, Status, DialogInput} from '../../components';
-import { Dialogs } from '../../containers'
+import { Status, DialogInput} from '../../components';
+import { Dialogs, Messages } from '../../containers'
 
 import './Chat.scss';
-
-import dialogsJSON from '../../dialogs.json'
 
 
 const Chat = () => {
@@ -26,9 +24,7 @@ const Chat = () => {
 					</button>
 				</div>
 
-				<Dialogs
-					items={dialogsJSON}
-				/>
+				<Dialogs userId={0} />
 
 			</div>
 
@@ -48,7 +44,7 @@ const Chat = () => {
 					</button>
 				</div>
 
-				<Messages/>
+				<Messages items/>
 
 				<DialogInput/>
 
