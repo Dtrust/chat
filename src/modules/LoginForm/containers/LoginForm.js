@@ -2,9 +2,12 @@ import { withFormik } from 'formik';
 
 import validate from '../../../utils/validate';
 import LoginForm from '../components/LoginForm';
+import { userActions } from '../../../redux/actions';
+
+import store from '../../../redux/store'
 
 
-export default withFormik({
+const LoginFormContainer =  withFormik({
 	enableReinitialize:  true,
 	mapPropsToValues: () => ({
 		email: '',
@@ -18,12 +21,21 @@ export default withFormik({
 		return errors;
 	},
 
-	handleSubmit: (values, { setSubmitting }) => {
-		setTimeout(() => {
-			alert(JSON.stringify(values, null, 2));
+	handleSubmit: (values, { setSubmitting, props }) => {
+		store.dispatch(userActions.fetchUserLogin(values)).then(({ status }) => {
+			if (status === 'success') {
+				setTimeout(() => {
+					props.history.push('/');
+				}, 3000);
+			}
+			setSubmitting(false)
+		})
+		.catch(() => {
 			setSubmitting(false);
-		}, 1000);
+		})
 	},
-
 	displayName: 'LoginForm',
 })(LoginForm);
+
+
+export default LoginFormContainer

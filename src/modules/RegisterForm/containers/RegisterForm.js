@@ -2,6 +2,8 @@ import { withFormik } from 'formik';
 
 import validate from '../../../utils/validate'
 import RegisterForm from '../components/RegisterForm';
+import store from '../../../redux/store';
+import {userActions} from '../../../redux/actions';
 
 
 export default withFormik({
@@ -20,11 +22,18 @@ export default withFormik({
 		return errors;
 	},
 
-	handleSubmit: (values, { setSubmitting }) => {
-		setTimeout(() => {
-			alert(JSON.stringify(values, null, 2));
+	handleSubmit: (values, { setSubmitting, props }) => {
+		store.dispatch(userActions.fetchUserSignup(values)).then(({ status }) => {
+			if (status === 'success') {
+				setTimeout(() => {
+					props.history.push('/');
+				}, 3000);
+			}
 			setSubmitting(false);
-		}, 1000);
+		})
+		.catch(() => {
+			setSubmitting(false);
+		})
 	},
 
 	displayName: 'RegisterForm',

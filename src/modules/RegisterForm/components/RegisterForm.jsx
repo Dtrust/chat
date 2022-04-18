@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Input} from 'antd';
-import { UserOutlined, LockOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Form } from 'antd';
+import { UserOutlined, LockOutlined, InfoCircleOutlined, MailOutlined } from '@ant-design/icons';
 
-import { Button, Block } from '../../../components';
-import { validateField } from '../../../utils/helpers'
+import { Button, Block, FormField } from '../../../components';
+
 
 const RegisterForm = props => {
 
@@ -38,58 +38,60 @@ const RegisterForm = props => {
 							remember: true,
 						}}
 					>
-						<Form.Item
-							name="username"
-						>
-							<Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-						</Form.Item>
-						<Form.Item
-							name="email"
-							validateStatus={validateField('email', touched, errors)}
-							help={!touched.email ? '' : errors.email}
-						>
-							<Input
-								prefix={<UserOutlined className="site-form-item-icon" />}
-								id="email"
-								placeholder="E-mail"
-								onChange={handleChange}
-								onBlur={handleBlur}
-								value={values.email}
-							/>
-						</Form.Item>
-						<Form.Item
-							name="password"
-							validateStatus={validateField('password', touched, errors)}
-							help={!touched.password ? '' : errors.password}
-						>
-							<Input
-								prefix={<LockOutlined className="site-form-item-icon" />}
-								id ='password'
-								type="password"
-								placeholder="Password"
-								onChange={handleChange}
-								onBlur={handleBlur}
-								value={values.password}
-							/>
-						</Form.Item>
-						<Form.Item
-							name="password2"
-							validateStatus={
-								!touched.password ? '' : errors.password ? 'error' : 'success'
-							}
-						>
-							<Input
-								prefix={<LockOutlined className="site-form-item-icon" />}
-								id='password2'
-								type="password"
-								placeholder="Retype Password"
-								onChange={handleChange}
-								onBlur={handleBlur}
-								value={values.password}
-							/>
-						</Form.Item>
+						<FormField
+							name='username'
+							type='text'
+							icon={UserOutlined}
+							placeholder='Username'
+							handleChange={handleChange}
+							handleBlur={handleBlur}
+							touched={touched}
+							errors={errors}
+							values={values}
+						/>
+						<FormField
+							name='email'
+							type='text'
+							icon={MailOutlined}
+							placeholder='E-mail'
+							handleChange={handleChange}
+							handleBlur={handleBlur}
+							touched={touched}
+							errors={errors}
+							values={values}
+						/>
+						<FormField
+							name='password'
+							type='password'
+							isPass={true}
+							icon={LockOutlined}
+							placeholder='Password'
+							handleChange={handleChange}
+							handleBlur={handleBlur}
+							touched={touched}
+							errors={errors}
+							values={values}
+						/>
+						<FormField
+							name='password2'
+							type='password'
+							isPass={true}
+							icon={LockOutlined}
+							placeholder='Retype Password'
+							handleChange={handleChange}
+							handleBlur={handleBlur}
+							touched={touched}
+							errors={errors}
+							values={values}
+						/>
 						<Form.Item>
-							<Button onClick={handleSubmit} type="primary" htmlType="submit" className="login-form-button">
+							<Button
+								disabled={isSubmitting}
+								onClick={handleSubmit}
+								type="primary"
+								htmlType="submit"
+								className="login-form-button"
+							>
 								Signup
 							</Button>
 							Or <Link to='/'>Log in!</Link>

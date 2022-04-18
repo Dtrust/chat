@@ -19,6 +19,7 @@ const LoginForm = props => {
 		handleSubmit,
 		handleReset,
 		dirty,
+		status
 	} = props;
 
 	return (
@@ -66,7 +67,13 @@ const LoginForm = props => {
 						/>
 					</Form.Item>
 					<Form.Item>
-						<Button type="primary" htmlType="submit" className="login-form-button">
+						<Button
+							type="primary"
+							htmlType="submit"
+							className="login-form-button"
+							disabled={isSubmitting}
+							onClick={handleSubmit}
+						>
 							Log in
 						</Button>
 						Or <Link to='/signup'>register now!</Link>

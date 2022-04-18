@@ -1,5 +1,5 @@
 export default (key, touched, errors) => {
-	if(touched[key]) {
+	if (touched[key]) {
 		if(errors[key]) {
 			return 'error';
 		} else {
