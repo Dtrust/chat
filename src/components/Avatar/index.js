@@ -11,12 +11,12 @@ const Avatar = ({ user }) => {
 			<img
 				className='dialogs-item__img avatar'
 				src={user.avatar}
-				alt={`Avatar ${user.fullName}`}
+				alt={`Avatar ${user.username}`}
 			/>
 		)
 	} else {
 		const {color, colorLighten} = generateAvatarFromHash(user._id);
-		const getFirstNameChar = user.fullName[0];
+		const getFirstNameChar = user.username[0];
 
 		return (
 			<div

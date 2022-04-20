@@ -28,9 +28,9 @@ const Dialogs = ({ items, userId, onSearch, inputValue, currentDialogId, onSelec
 				{items.length ? (
 					orderBy(items, ['created_at'], ['asc']).map(item => (
 						<DialogItem
-							onSelect={onSelectDialog}
 							key={item._id}
-							isMe={item.user._id === userId}
+							onSelect={onSelectDialog}
+							isMe={item.author._id === userId}
 							currentDialogId={currentDialogId}
 							{...item}
 						/>
@@ -40,7 +40,6 @@ const Dialogs = ({ items, userId, onSearch, inputValue, currentDialogId, onSelec
 					<Empty
 						image={Empty.PRESENTED_IMAGE_SIMPLE}
 						description='Sorry, contact not found'
-
 					/>
 				)}
 			</div>

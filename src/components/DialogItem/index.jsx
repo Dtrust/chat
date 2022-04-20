@@ -8,39 +8,39 @@ import { ReadIcon, Avatar } from '../../components';
 import './DialogItem.scss';
 
 
-const getMessageTime = created_at => {
-	if(isToday(new Date(created_at))) {
-		return format(new Date(created_at), 'HH:mm')
+const getMessageTime = createdAt => {
+	if(isToday(new Date(createdAt))) {
+		return format(new Date(createdAt), 'HH:mm')
 	} else {
-		return format(new Date(created_at), 'dd.MM.yyyy')
+		return format(new Date(createdAt), 'dd.MM.yyyy')
 	}
 };
 
-const DialogItem = ({ _id, user, text, created_at, unread, isMe, onSelect, currentDialogId }) => (
+const DialogItem = ({ _id, user, partner, text, createdAt, unread, isMe, onSelect, currentDialogId, lastMessage }) => (
 	<div
 		className={
 			classNames('dialogs-item', {
-				'dialogs-item--online': user.isOnline,
+				'dialogs-item--online': lastMessage.user.isOnline,
 				'active': currentDialogId === _id,
 			})
 		}
 		onClick={onSelect.bind(this, _id)}
 	>
 		<div className='dialogs-item__avatar'>
-			<Avatar user={user} />
+			<Avatar user={partner} />
 		</div>
 		<div className='dialogs-item__wrap'>
 			<div className='dialogs-item__top'>
 				<p className='dialogs-item__name'>
-					{user.fullName}
+					{partner.username}
 				</p>
 				<p className='dialogs-item__time'>
-					{getMessageTime(created_at)}
+					{getMessageTime(lastMessage.createdAt)}
 				</p>
 			</div>
 			<div className='dialogs-item__bottom'>
 				<p className='dialogs-item__message'>
-					{text}
+					{lastMessage.text}
 				</p>
 				<div className='dialogs-item__icon'>
 					{isMe && <ReadIcon isMe={true} isRead={true}/>}

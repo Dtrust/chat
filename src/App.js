@@ -11,7 +11,7 @@ const App = props => {
 
     return (
         <div className="wrapper" data-theme="default">
-            <Route exact path={['/', '/signin', '/signup', '/signup/result']} component={Auth}/>
+            <Route exact path={['/signin', '/signup', '/signup/verify']} component={Auth}/>
             <Route exact path='/' render={() => (isAuth ? <Chat/> : <Redirect to='/signin'/>)} />
         </div>
     )
