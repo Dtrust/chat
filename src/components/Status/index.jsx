@@ -5,17 +5,24 @@ import classNames from 'classnames';
 import './Status.scss';
 
 
-const Status = ({online}) => {
+const Status = ({online, username}) => {
 	return (
-		<p className={
-			classNames('status',
-				{
-					'status--online' : online,
-					'status--offline' : !online
-				})
-		}>
-			{online ? 'online' : 'offline'}
-		</p>
+		<div className='dialog-header__wrap'>
+			<p className='dialog-header__title'>
+				{username}
+			</p>
+			<div className='dialog-header__status'>
+				<p className={
+					classNames('status',
+						{
+							'status--online' : online,
+							'status--offline' : !online
+						})
+				}>
+					{online ? 'online' : 'offline'}
+				</p>
+			</div>
+		</div>
 	);
 };
 

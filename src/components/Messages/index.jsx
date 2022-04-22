@@ -4,12 +4,12 @@ import classNames from 'classnames'
 
 import { Empty, Spin } from 'antd';
 
-import {Message} from '../';
+import { Message } from '../';
 
 import background from '../../assets/img/chat-bg.jpg';
 
 
-const Messages = ({ blockRef, isLoading, items }) => {
+const Messages = ({ blockRef, isLoading, items, user }) => {
 
 	return (
 		<div
@@ -26,7 +26,7 @@ const Messages = ({ blockRef, isLoading, items }) => {
 				<Spin size='large' tip="Loading messages..."/>
 			) : items && !isLoading ? (
 				items.length > 0 ? (
-					items.map(item => <Message key={item._id} {...item}/>)
+					items.map(item => <Message key={item._id} {...item} isMe={user._id === item.user._id}/>)
 				) : (
 					<Empty description='No messages'/>
 				)

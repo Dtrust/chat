@@ -34,6 +34,14 @@ const actions = {
 				dispatch(actions.fetchUserData());
 			}
 			return data;
+		}).catch(({response}) => {
+			if (response.status === 403) {
+				openNotification({
+					title: 'Authorisation Error',
+					text: 'Incorrect E-mail or Password',
+					type: 'error',
+				})
+			}
 		})
 	},
 	fetchUserSignup: postData => dispatch => {

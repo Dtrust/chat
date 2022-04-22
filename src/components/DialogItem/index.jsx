@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import format from 'date-fns/format'
-import isToday from 'date-fns/isToday'
+import format from 'date-fns/format';
+import isToday from 'date-fns/isToday';
 
 import { ReadIcon, Avatar } from '../../components';
 
@@ -17,42 +18,44 @@ const getMessageTime = createdAt => {
 };
 
 const DialogItem = ({ _id, user, partner, text, createdAt, unread, isMe, onSelect, currentDialogId, lastMessage }) => (
-	<div
-		className={
-			classNames('dialogs-item', {
-				'dialogs-item--online': lastMessage.user.isOnline,
-				'active': currentDialogId === _id,
-			})
-		}
-		onClick={onSelect.bind(this, _id)}
-	>
-		<div className='dialogs-item__avatar'>
-			<Avatar user={partner} />
-		</div>
-		<div className='dialogs-item__wrap'>
-			<div className='dialogs-item__top'>
-				<p className='dialogs-item__name'>
-					{partner.username}
-				</p>
-				<p className='dialogs-item__time'>
-					{getMessageTime(lastMessage.createdAt)}
-				</p>
+	<Link to={`/dialog/${_id}`}>
+		<div
+			className={
+				classNames('dialogs-item', {
+					'dialogs-item--online': lastMessage.user.isOnline,
+					'active': currentDialogId === _id,
+				})
+			}
+			onClick={onSelect.bind(this, _id)}
+		>
+			<div className='dialogs-item__avatar'>
+				<Avatar user={partner} />
 			</div>
-			<div className='dialogs-item__bottom'>
-				<p className='dialogs-item__message'>
-					{lastMessage.text}
-				</p>
-				<div className='dialogs-item__icon'>
-					{isMe && <ReadIcon isMe={true} isRead={true}/>}
-					{unread > 0 && (
-						<span className='dialogs-item__icon--mark'>
-							<span className='dialogs-item__icon--count'>{unread > 9 ? '+9' : unread}</span>
-						</span>
-					)}
+			<div className='dialogs-item__wrap'>
+				<div className='dialogs-item__top'>
+					<p className='dialogs-item__name'>
+						{partner.username}
+					</p>
+					<p className='dialogs-item__time'>
+						{getMessageTime(lastMessage.createdAt)}
+					</p>
+				</div>
+				<div className='dialogs-item__bottom'>
+					<p className='dialogs-item__message'>
+						{lastMessage.text}
+					</p>
+					<div className='dialogs-item__icon'>
+						{isMe && <ReadIcon isMe={true} isRead={true}/>}
+						{unread > 0 && (
+							<span className='dialogs-item__icon--mark'>
+								<span className='dialogs-item__icon--count'>{unread > 9 ? '+9' : unread}</span>
+							</span>
+						)}
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</Link>
 )
 
 export default DialogItem;

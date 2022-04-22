@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { UploadField } from '@navjobs/upload'
 
 import {Input} from 'antd';
+import { SmileOutlined, PaperClipOutlined, AudioOutlined, SendOutlined } from '@ant-design/icons/lib/icons';
 import { Picker } from 'emoji-mart';
 
 import './DialogInput.scss'
-import { SmileOutlined, PaperClipOutlined, AudioOutlined, SendOutlined } from '@ant-design/icons/lib/icons';
 
 
 const DialogInput = props => {
@@ -13,9 +13,18 @@ const DialogInput = props => {
 	const [value, setValue] = useState('');
 	const [emojiPickerVisible, setShowEmojiPicker] = useState('');
 
+	const { onSendMessage, currentDialogId } = props;
+
 	const toggleEmojiPicker = () => {
-		setShowEmojiPicker(!emojiPickerVisible)
+		setShowEmojiPicker(!emojiPickerVisible);
+		setValue('');
 	};
+
+	const handleSendMessage = (e) => {
+		if (e.keyCode === 13) {
+			onSendMessage(value, currentDialogId)
+		}
+	}
 
 	return (
 		<div className='dialog-input'>
@@ -25,7 +34,13 @@ const DialogInput = props => {
 					<SmileOutlined />
 				</button>
 			</div>
-			<Input onChange={e => setValue(e.target.value)} className='dialog-input__field' size='large'/>
+			<Input
+				onChange={e => setValue(e.target.value)}
+				onKeyUp={handleSendMessage}
+				className='dialog-input__field'
+				size='large'
+				value={value}
+			/>
 			<div className='dialog-input__actions'>
 				<UploadField
 					onFiles={files => console.log(files)}
