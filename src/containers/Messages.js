@@ -7,7 +7,16 @@ import socket from '../core/socket';
 import { Messages as BaseMessages } from '../components';
 
 
-const Dialogs = ({ currentDialogId, fetchMessages, addMessage, items, user, isLoading }) => {
+const Dialogs = (
+	{
+		currentDialogId,
+		fetchMessages,
+		addMessage,
+		items,
+		user,
+		isLoading,
+		removeMessageById,
+	}) => {
 
 	const messagesRef = useRef(null);
 
@@ -38,6 +47,7 @@ const Dialogs = ({ currentDialogId, fetchMessages, addMessage, items, user, isLo
 			blockRef={messagesRef}
 			items={items}
 			isLoading={isLoading}
+			handleRemoveMessage={removeMessageById}
 		/>
 	)
 };

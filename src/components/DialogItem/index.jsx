@@ -22,7 +22,7 @@ const DialogItem = ({ _id, user, partner, text, createdAt, unread, isMe, onSelec
 		<div
 			className={
 				classNames('dialogs-item', {
-					'dialogs-item--online': lastMessage.user.isOnline,
+					'dialogs-item--online': partner.isOnline,
 					'active': currentDialogId === _id,
 				})
 			}

@@ -10,3 +10,4 @@ export { default as Avatar} from './Avatar';
 export { default as Status} from './Status';
 export { default as DialogInput} from './DialogInput';
 export { default as FormField} from './FormField';
+export { default as Sidebar} from './Sidebar';

@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { Popover, Button } from 'antd';
 
 import {ReadIcon, Time, Avatar} from '../../components';
 
@@ -70,7 +71,19 @@ const MessageAudio = ({ audioSrc }) => {
 	)
 }
 
-const Message = ({ user, avatar, text, audio, date, isMe, isRead, attachments, isTyping }) => {
+const Message = (
+	{
+		user,
+		avatar,
+		text,
+		audio,
+		date,
+		isMe,
+		isRead,
+		attachments,
+		isTyping,
+		handleRemoveMessage,
+	}) => {
 
 	return(
 		<div className={
@@ -86,6 +99,17 @@ const Message = ({ user, avatar, text, audio, date, isMe, isRead, attachments, i
 				<Avatar user={user}/>
 				{/*<img className='message-avatar__img' src={avatar} alt={`Avatar ${user.fullName}`}/>*/}
 			</div>
+
+			<Popover
+				placement="bottomRight"
+				content={
+					<Button onClick={handleRemoveMessage}>Delete Message</Button>
+				}
+				trigger="click"
+			>
+				<Button>BR</Button>
+			</Popover>
+
 			<div className="message-content">
 				<div className="message-content__bubble">
 					{text && (<p className='message-content__text'>{text}</p>)}
