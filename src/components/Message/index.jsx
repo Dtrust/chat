@@ -2,15 +2,17 @@ import React, {useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Popover, Button } from 'antd';
+import { Emoji } from 'emoji-mart';
+import reactStringReplace from 'react-string-replace';
 
 import {ReadIcon, Time, Avatar} from '../../components';
 
-import { convertCurrentTime } from '../../utils/helpers'
+import { convertCurrentTime } from '../../utils/helpers';
 
-import waveSvg from '../../assets/img/wave.svg'
-import playSvg from '../../assets/img/play.svg'
-import pauseSvg from '../../assets/img/pause.svg'
-import './Message.scss'
+import waveSvg from '../../assets/img/wave.svg';
+import playSvg from '../../assets/img/play.svg';
+import pauseSvg from '../../assets/img/pause.svg';
+import './Message.scss';
 
 
 const MessageAudio = ({ audioSrc }) => {
@@ -77,9 +79,9 @@ const Message = (
 		avatar,
 		text,
 		audio,
-		date,
+		createdAt,
 		isMe,
-		isRead,
+		unread,
 		attachments,
 		isTyping,
 		handleRemoveMessage,
@@ -112,7 +114,14 @@ const Message = (
 
 			<div className="message-content">
 				<div className="message-content__bubble">
-					{text && (<p className='message-content__text'>{text}</p>)}
+					{text && (
+						//Todo this is not a good practice
+						<p className='message-content__text'>
+							{reactStringReplace(text, /:(.+?):/g, (match) => (
+								<Emoji key={Math.random()} size={60} emoji={match} set='apple'/>
+							))}
+						</p>
+					)}
 
 					{audio && (<MessageAudio audioSrc={audio}/>)}
 
@@ -134,12 +143,10 @@ const Message = (
 						</div>
 					)}
 				</div>
-				{date && (
-					<span className="message-content__date">
-						<Time date={new Date(date)}/>
-					</span>)
-				}
-				<ReadIcon isMe={true} isRead={true}/>
+				<span className="message-content__date">
+					<Time date={createdAt}/>
+				</span>
+				<ReadIcon isMe={isMe} isRead={unread}/>
 			</div>
 		</div>
 	)

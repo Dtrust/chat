@@ -10,14 +10,14 @@ const ReadIcon = ({ isMe, isRead }) => (
 		isRead ? (
 			<img
 				className='message-content__icon'
-				src={readIcon}
-				alt='read icon'
+				src={noReadIcon}
+				alt='no read icon'
 			/>
 		) : (
 			<img
 				className='message-content__icon'
-				src={noReadIcon}
-				alt='no read icon'
+				src={readIcon}
+				alt='read icon'
 			/>
 		))
 )

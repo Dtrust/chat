@@ -6,10 +6,16 @@ import { messagesActions } from '../redux/actions';
 
 
 const DialogInput = ({ fetchSendMessage, currentDialogId }) => {
+
+	if (!currentDialogId) {
+		return null
+	}
+
 	return <DialogInputBase
 		onSendMessage={fetchSendMessage}
 		currentDialogId={currentDialogId}
 	/>;
+
 };
 
 

@@ -5,7 +5,7 @@ import messages from './messages';
 import user from './user';
 
 
-const reducers = ['dialogs', 'messages', 'user',];
+const reducers = ['dialogs', 'messages', 'user', 'attachments'];
 
 
 export default combineReducers(

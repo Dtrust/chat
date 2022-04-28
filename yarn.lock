@@ -9849,6 +9849,11 @@ react-simple-code-editor@^0.10.0:
   resolved "https://registry.yarnpkg.com/react-simple-code-editor/-/react-simple-code-editor-0.10.0.tgz#73e7ac550a928069715482aeb33ccba36efe2373"
   integrity sha512-bL5W5mAxSW6+cLwqqVWY47Silqgy2DKDTR4hDBrLrUqC5BXc29YVx17l2IZk5v36VcDEq1Bszu2oHm1qBwKqBA==
 
+react-string-replace@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-string-replace/-/react-string-replace-1.0.0.tgz#a003f94792147509107af9d376436460234911b1"
+  integrity sha512-+iLsyE4AeSmnfctgswXOf1PmKRgns6wJ4LVb+8ADMU6mDK3jvBE11QzfMQf7CYtPUUiBCDjZ9ZppzXOIYrzCRg==
+
 react-styleguidist@^11.2.0:
   version "11.2.0"
   resolved "https://registry.yarnpkg.com/react-styleguidist/-/react-styleguidist-11.2.0.tgz#361db6db6bb7aefa5867f85c83383d386ed27cea"

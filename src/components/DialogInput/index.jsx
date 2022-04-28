@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { UploadField } from '@navjobs/upload'
 
 import {Input} from 'antd';
 import { SmileOutlined, PaperClipOutlined, AudioOutlined, SendOutlined } from '@ant-design/icons/lib/icons';
 import { Picker } from 'emoji-mart';
 
+import { UploadFiles } from '../../components';
+
 import './DialogInput.scss'
+
+
+const { TextArea } = Input
 
 
 const DialogInput = props => {
@@ -17,29 +22,56 @@ const DialogInput = props => {
 
 	const toggleEmojiPicker = () => {
 		setShowEmojiPicker(!emojiPickerVisible);
-		setValue('');
+		// setValue('');
 	};
 
-	const handleSendMessage = (e) => {
+	const handleSendMessage = () => {
+		onSendMessage(value, currentDialogId);
+		setValue('');
+	}
+
+	const onKeySendMessage = (e) => {
 		if (e.keyCode === 13) {
-			onSendMessage(value, currentDialogId)
+			handleSendMessage();
 		}
 	}
+
+	const addEmoji = ({colons}) => {
+		setValue((`${value} ${colons}`).trim())
+	}
+
+	const handleOutsideClick = (el, e) => {
+		if (el && !el.contains(e.target)) {
+			setShowEmojiPicker(false);
+		}
+	}
+
+	useEffect(() => {
+		const el = document.querySelector('.dialog-input__emoji');
+		console.log(el)
+		document.addEventListener('click', handleOutsideClick.bind(this, el));
+
+		return () => {
+			document.removeEventListener('click', handleOutsideClick.bind(this, el));
+		}
+	}, []);
+
 
 	return (
 		<div className='dialog-input'>
 			<div className='dialog-input__emoji'>
-				{ emojiPickerVisible && <Picker style={{ position: 'absolute', bottom: '55px'}} set='apple'/>}
+				{ emojiPickerVisible && <Picker onSelect={(emojiTag) => addEmoji(emojiTag)} style={{ position: 'absolute', bottom: '55px'}} set='apple'/>}
 				<button onClick={toggleEmojiPicker} className='dialog-input__btn btn-emoji'>
 					<SmileOutlined />
 				</button>
 			</div>
-			<Input
+			<TextArea
 				onChange={e => setValue(e.target.value)}
-				onKeyUp={handleSendMessage}
+				onKeyUp={onKeySendMessage}
 				className='dialog-input__field'
 				size='large'
 				value={value}
+				autoSize
 			/>
 			<div className='dialog-input__actions'>
 				<UploadField
@@ -57,7 +89,10 @@ const DialogInput = props => {
 					</button>
 				</UploadField>
 				{value ? (
-					<button className='dialog-input__actions-btn btn-send'>
+					<button
+						className='dialog-input__actions-btn btn-send'
+						onClick={handleSendMessage}
+					>
 						<SendOutlined />
 					</button>
 				) : (
@@ -67,6 +102,9 @@ const DialogInput = props => {
 				)
 				}
 			</div>
+			{/*<div>*/}
+			{/*	<UploadFiles/>*/}
+			{/*</div>*/}
 		</div>
 	);
 };

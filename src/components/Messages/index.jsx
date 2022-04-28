@@ -38,7 +38,7 @@ const Messages = ({ handleRemoveMessage, blockRef, isLoading, items, user }) => 
 					<Empty description='No messages'/>
 				)
 			) : (
-				<Empty description='No messages'/>
+				<Empty description='Please, open dialog'/>
 			)}
 		</div>
 	)

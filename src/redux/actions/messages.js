@@ -21,19 +21,19 @@ const actions = {
 		messagesApi.send(text, dialogId);
 	},
 	removeMessageById: (id) => dispatch => {
-
-
-		dispatch({
-			type: 'MESSAGES:REMOVE_MESSAGE',
-			payload: id
-		})
-
-		messagesApi
-		.removeById(id)
-		.then(({ data }) => {})
-		.catch(() => {
-			dispatch(actions.setIsLoading(false))
-		})
+		if (window.confirm('Are You Sure?')) {
+			messagesApi
+			.removeById(id)
+			.then(({ data }) => {
+				dispatch({
+					type: "MESSAGES:REMOVE_MESSAGE",
+					payload: id
+				});
+			})
+			.catch(() => {
+				dispatch(actions.setIsLoading(false))
+			})
+		}
 	},
 	setIsLoading: bool => ({
 		type: 'MESSAGES:SET_IS_LOADING',

@@ -2,6 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 
 import { messagesActions } from '../redux/actions';
+
+import {Empty} from 'antd';
+
 import socket from '../core/socket';
 
 import { Messages as BaseMessages } from '../components';
@@ -18,10 +21,13 @@ const Dialogs = (
 		removeMessageById,
 	}) => {
 
+	if (!currentDialogId) {
+		return <Empty description='Please, open dialog'/>
+	}
+
 	const messagesRef = useRef(null);
 
 	const getNewMessage = (data) => {
-		console.log(data);
 		addMessage(data)
 	}
 
@@ -46,7 +52,7 @@ const Dialogs = (
 			user={user}
 			blockRef={messagesRef}
 			items={items}
-			isLoading={isLoading}
+			isLoading={isLoading && !user}
 			handleRemoveMessage={removeMessageById}
 		/>
 	)

@@ -42,8 +42,12 @@ const Dialogs = ({ fetchDialogs, currentDialogId, setCurrentDialogId, items, use
 		// 	setFilteredItems(items);
 		// }
 		socket.on("SERVER:DIALOG_CREATED",  getNewDialogs);
+		socket.on("SERVER:NEW_MESSAGE",  getNewDialogs);
 
-		return () => socket.removeListener("SERVER:DIALOG_CREATED",  getNewDialogs);
+		return () => {
+			socket.removeListener('SERVER:DIALOG_CREATED', getNewDialogs);
+			socket.on("SERVER:NEW_MESSAGE",  getNewDialogs);
+		}
 	}, [])
 
 	return (
@@ -52,7 +56,7 @@ const Dialogs = ({ fetchDialogs, currentDialogId, setCurrentDialogId, items, use
 			items={filtered}
 			onSearch={onChangeInput}
 			inputValue={inputValue}
-			onSelectDialog={setCurrentDialogId}
+			// onSelectDialog={setCurrentDialogId}
 			currentDialogId={currentDialogId}
 		/>
 	)

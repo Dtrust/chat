@@ -10,7 +10,15 @@ import './Dialogs.scss';
 
 const { Search } = Input;
 
-const Dialogs = ({ items, userId, onSearch, inputValue, currentDialogId, onSelectDialog }) => (
+const Dialogs = (
+	{
+		items,
+		userId,
+		onSearch,
+		inputValue,
+		currentDialogId,
+		// onSelectDialog
+	}) => (
 
 	<div>
 
@@ -29,7 +37,7 @@ const Dialogs = ({ items, userId, onSearch, inputValue, currentDialogId, onSelec
 					orderBy(items, ['created_at'], ['asc']).map(item => (
 						<DialogItem
 							key={item._id}
-							onSelect={onSelectDialog}
+							// onSelect={onSelectDialog}
 							isMe={item.author._id === userId}
 							currentDialogId={currentDialogId}
 							{...item}
