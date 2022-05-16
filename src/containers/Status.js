@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Status as StatusBase } from '../components';
 
 
-const DialogInput = ({ currentDialogId, user, dialogs }) => {
+const Status = ({ currentDialogId, user, dialogs }) => {
 
 	if (!dialogs.length || !currentDialogId) {
 		return null
@@ -32,4 +32,4 @@ export default connect(
 		currentDialogId: dialogs.currentDialogId,
 		user: user.data,
 	}),
-)(DialogInput);
+)(Status);

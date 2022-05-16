@@ -1,81 +1,84 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { UploadField } from '@navjobs/upload'
 
-import {Input} from 'antd';
-import { SmileOutlined, PaperClipOutlined, AudioOutlined, SendOutlined } from '@ant-design/icons/lib/icons';
+import { Input, Typography } from 'antd';
+import { SmileOutlined, PaperClipOutlined, AudioOutlined, SendOutlined, CloseCircleFilled } from '@ant-design/icons/lib/icons';
 import { Picker } from 'emoji-mart';
 
 import { UploadFiles } from '../../components';
 
 import './DialogInput.scss'
+import classNames from 'classnames';
 
 
 const { TextArea } = Input
+const { Text } = Typography;
 
 
 const DialogInput = props => {
 
-	const [value, setValue] = useState('');
-	const [emojiPickerVisible, setShowEmojiPicker] = useState('');
-
-	const { onSendMessage, currentDialogId } = props;
-
-	const toggleEmojiPicker = () => {
-		setShowEmojiPicker(!emojiPickerVisible);
-		// setValue('');
-	};
-
-	const handleSendMessage = () => {
-		onSendMessage(value, currentDialogId);
-		setValue('');
-	}
-
-	const onKeySendMessage = (e) => {
-		if (e.keyCode === 13) {
-			handleSendMessage();
-		}
-	}
-
-	const addEmoji = ({colons}) => {
-		setValue((`${value} ${colons}`).trim())
-	}
-
-	const handleOutsideClick = (el, e) => {
-		if (el && !el.contains(e.target)) {
-			setShowEmojiPicker(false);
-		}
-	}
-
-	useEffect(() => {
-		const el = document.querySelector('.dialog-input__emoji');
-		console.log(el)
-		document.addEventListener('click', handleOutsideClick.bind(this, el));
-
-		return () => {
-			document.removeEventListener('click', handleOutsideClick.bind(this, el));
-		}
-	}, []);
-
+	const {
+		emojiPickerVisible,
+		toggleEmojiPicker,
+		addEmoji,
+		value,
+		setValue,
+		attachments,
+		removeAttachment,
+		onSelectFiles,
+		sendMessage,
+		onKeySendMessage,
+		onRecord,
+		isRecord,
+		onStopRecord
+	} = props;
 
 	return (
 		<div className='dialog-input'>
-			<div className='dialog-input__emoji'>
-				{ emojiPickerVisible && <Picker onSelect={(emojiTag) => addEmoji(emojiTag)} style={{ position: 'absolute', bottom: '55px'}} set='apple'/>}
-				<button onClick={toggleEmojiPicker} className='dialog-input__btn btn-emoji'>
-					<SmileOutlined />
-				</button>
-			</div>
-			<TextArea
-				onChange={e => setValue(e.target.value)}
-				onKeyUp={onKeySendMessage}
-				className='dialog-input__field'
-				size='large'
-				value={value}
-				autoSize
-			/>
+			{isRecord ? (
+				<div className='dialog-input__actions--record record'>
+					<Text
+						type="danger"
+						strong
+						className='record-txt'
+					>
+						Recording...
+					</Text>
+					<button
+						onClick={onStopRecord}
+					>
+						<CloseCircleFilled
+							style={{ color: 'rgba(230,30,55,1)' }}
+						/>
+					</button>
+				</div>
+			) : (
+				<div className='dialog-input__wrap'>
+					<div className='dialog-input__emoji'>
+						{ emojiPickerVisible && <Picker onSelect={(emojiTag) => addEmoji(emojiTag)} style={{ position: 'absolute', bottom: '55px'}} set='apple'/>}
+						<button onClick={toggleEmojiPicker} className='dialog-input__btn btn-emoji'>
+							<SmileOutlined />
+						</button>
+					</div>
+					<TextArea
+						onChange={e => setValue(e.target.value)}
+						onKeyUp={onKeySendMessage}
+						className='dialog-input__field'
+						size='large'
+						value={value}
+						autoSize
+					/>
+					{attachments.length > 0 && (
+						<UploadFiles
+							removeAttachment={removeAttachment}
+							attachments={attachments}
+						/>
+					)}
+				</div>
+			)}
 			<div className='dialog-input__actions'>
 				<UploadField
-					onFiles={files => console.log(files)}
+					onFiles={onSelectFiles}
 					containerProps={{
 						className: 'dialog-input__actions-btn btn-upload'
 					}}
@@ -84,27 +87,31 @@ const DialogInput = props => {
 						multiple: "multiple",
 					}}
 				>
-					<button>
+					<button
+						className={classNames({
+							'hidden': isRecord
+						})}
+					>
 						<PaperClipOutlined />
 					</button>
 				</UploadField>
-				{value ? (
+				{isRecord || value ? (
 					<button
 						className='dialog-input__actions-btn btn-send'
-						onClick={handleSendMessage}
+						onClick={sendMessage}
 					>
 						<SendOutlined />
 					</button>
 				) : (
-					<button className='dialog-input__actions-btn btn-audio'>
+					<button
+						onClick={onRecord}
+						className='dialog-input__actions-btn btn-audio'
+					>
 						<AudioOutlined />
 					</button>
-				)
-				}
+				)}
 			</div>
-			{/*<div>*/}
-			{/*	<UploadFiles/>*/}
-			{/*</div>*/}
+
 		</div>
 	);
 };

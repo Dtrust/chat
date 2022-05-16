@@ -125,7 +125,7 @@ const Message = (
 
 					{audio && (<MessageAudio audioSrc={audio}/>)}
 
-					{attachments && (
+					{attachments.length > 0 && (
 						<div className='message-content__attachments'>
 							{attachments.map((item, index) => (
 								<div key={index} className='message-content__attachments-item'>

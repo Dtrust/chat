@@ -17,8 +17,8 @@ const actions = {
 			})
 		}
 	},
-	fetchSendMessage: (text, dialogId) => dispatch => {
-		messagesApi.send(text, dialogId);
+	fetchSendMessage: (text, dialogId, attachments) => dispatch => {
+		messagesApi.send(text, dialogId, attachments);
 	},
 	removeMessageById: (id) => dispatch => {
 		if (window.confirm('Are You Sure?')) {

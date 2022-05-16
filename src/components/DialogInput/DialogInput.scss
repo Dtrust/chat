@@ -2,6 +2,13 @@
 @import "./src/styles/mixins";
 
 
+@keyframes pulse-red {
+  100% {
+    -moz-box-shadow: 0 0 0 5px rgba(230,30,55,0), 0 0 0 15px rgba(230,30,55,0);
+    box-shadow: 0 0 0 5px rgba(230,30,55,0), 0 0 0 15px rgba(230,30,55,0);
+  }
+}
+
 .dialog{
   &-input{
     position: absolute;
@@ -15,12 +22,41 @@
       padding-right: 70px!important;
       border-radius: $-border-radius!important;
     }
+    &__wrap{
+      width: 100%;
+    }
     &__btn,
     &__actions{
       position: absolute;
       top: 50%;
       transform: translate(0, -50%);
       z-index: 1;
+      &--record{
+        @include flexCenter;
+        &::before{
+          content: '';
+          display: block;
+          width: 10px;
+          height: 10px;
+          margin-right: 15px;
+          border: 2px solid rgba(230,30,55,1);
+          border-radius: 50%;
+          transform-origin: 50% 50%;
+          transition: all 500ms ease;
+          background-color: rgba(230,30,55,1);
+          box-shadow: 0 0 0 0 rgba(230,30,55,.7), 0 0 0 0 rgba(230,30,55,.9);
+          -webkit-animation:  pulse-red 1.4s ease-out infinite;
+          -moz-animation:     pulse-red 1.4s ease-out infinite;
+          -ms-animation:      pulse-red 1.4s ease-out infinite;
+          animation:          pulse-red 1.4s ease-out infinite;
+        }
+        & .record{
+          &-txt{
+            display: inline-block;
+            margin-right: 15px
+          }
+        }
+      }
     }
     &__btn{
       left: 20px;
