@@ -28,7 +28,8 @@ const DialogItem = (
 		isMe,
 		// onSelect,
 		currentDialogId,
-		lastMessage
+		lastMessage,
+		userId
 	}) => (
 	<Link to={`/dialog/${_id}`}>
 		<div
@@ -54,7 +55,7 @@ const DialogItem = (
 				</div>
 				<div className='dialogs-item__bottom'>
 					<p className='dialogs-item__message'>
-						{lastMessage.text}
+						{lastMessage.user._id === userId ? `You: ${lastMessage.text}` : lastMessage.text}
 					</p>
 					<div className='dialogs-item__icon'>
 						{isMe && <ReadIcon isMe={isMe} isRead={lastMessage.unread}/>}

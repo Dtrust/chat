@@ -13,7 +13,7 @@ import './Chat.scss';
 
 const Chat = (props) => {
 
-	const { setCurrentDialogId } = props
+	const { setCurrentDialogId, user } = props
 
 	useEffect(() => {
 
@@ -28,25 +28,27 @@ const Chat = (props) => {
 
 			<Sidebar/>
 
-			<div className='chat-dialog dialog'>
+			{user && (
+				<div className='chat-dialog dialog'>
 
-				<Status/>
+					<Status/>
 
-				<button className='dialog-header__btn btn-dots'>
-					<EllipsisOutlined className='dialog-header__icon icon icon--dots' style={{fontSize: '22px'}} />
-				</button>
+					<button className='dialog-header__btn btn-dots'>
+						<EllipsisOutlined className='dialog-header__icon icon icon--dots' style={{fontSize: '22px'}}/>
+					</button>
 
-				<Messages items/>
+					<Messages items/>
 
-				<DialogInput/>
+					<DialogInput/>
 
-			</div>
+				</div>
+			)}
 
 		</section>
 	);
 };
 
 export default withRouter(connect(
-	({ dialogs }) => dialogs,
+	({ user }) => ({user: user.data}),
 	dialogsActions
 )(Chat));

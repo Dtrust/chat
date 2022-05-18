@@ -27,6 +27,7 @@ const DialogInput = props => {
 	const [isRecord, setIsRecord] = useState(false);
 	const [mediaRecorder, setMediaRecorder] = useState(null);
 	const [emojiPickerVisible, setShowEmojiPicker] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const onRecord = () => {
 		if (navigator.getUserMedia) {
@@ -49,8 +50,16 @@ const DialogInput = props => {
 		};
 
 		recorder.ondataavailable = (e) => {
-			const audioURL = window.URL.createObjectURL(e.data);
-			new Audio(audioURL).play();
+
+			const file = new File([e.data], 'audio.webm');
+
+			setIsLoading(true);
+
+			filesApi.upload(file).then(({ data }) => {
+				sendAudio(data.file._id);
+			}).then(() => {
+				setIsLoading(false);
+			});
 		}
 	}
 
@@ -76,9 +85,9 @@ const DialogInput = props => {
 		setIsRecord(true);
 	};
 
-	const onStopRecord = () => {
-		mediaRecorder.stop();
-	}
+	const onHideRecord = () => {
+		setIsRecord(false);
+	};
 
 	const onSelectFiles = async files => {
 		let uploaded = [];
@@ -111,19 +120,32 @@ const DialogInput = props => {
 		setAttachments(uploaded);
 	};
 
+	const sendAudio = (audioId) => {
+		return fetchSendMessage({
+			text: 'Voice message',
+			dialogId: currentDialogId,
+			attachments: [audioId],
+		});
+	};
+
 	const sendMessage = () => {
-		fetchSendMessage(value, currentDialogId, attachments.map(file => file.uid));
-		setValue('');
-		setAttachments([]);
+		if (isRecord) {
+			mediaRecorder.stop();
+		} else if (value || attachments.length) {
+			fetchSendMessage({
+				text: value,
+				dialogId: currentDialogId,
+				attachments: attachments.map(file => file.uid),
+			});
+			setValue('');
+			setAttachments([]);
+		}
 	};
 
-	const handleSendMessage = () => {
-		sendMessage();
-	};
-
-	const onKeySendMessage = (e) => {
+	const handleSendMessage = (e) => {
+		// sendMessage();
 		if (e.keyCode === 13) {
-			handleSendMessage();
+			sendMessage();
 		}
 	};
 
@@ -145,19 +167,17 @@ const DialogInput = props => {
 		value={value}
 		setValue={setValue}
 		emojiPickerVisible={emojiPickerVisible}
-		// handleOutsideClick={handleOutsideClick}
 		toggleEmojiPicker={toggleEmojiPicker}
-		onKeySendMessage={onKeySendMessage}
+		onKeySendMessage={handleSendMessage}
 		addEmoji={addEmoji}
 		handleSendMessage={handleSendMessage}
-		// onSendMessage={fetchSendMessage}
-		// currentDialogId={currentDialogId}
 		attachments={attachments}
 		onSelectFiles={onSelectFiles}
 		sendMessage={sendMessage}
 		isRecord={isRecord}
 		onRecord={onRecord}
-		onStopRecord={onStopRecord}
+		onHideRecord={onHideRecord}
+		isLoading={isLoading}
 	/>;
 
 };

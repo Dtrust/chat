@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { messagesActions } from '../redux/actions';
@@ -25,11 +25,17 @@ const Dialogs = (
 		return <Empty description='Please, open dialog'/>
 	}
 
+	const [previewImage, setPreviewImage] = useState(null);
+
+	const onClosePreviewImage = () => {
+		setPreviewImage(null);
+	};
+
 	const messagesRef = useRef(null);
 
 	const getNewMessage = (data) => {
-		addMessage(data)
-	}
+		addMessage(data);
+	};
 
 	useEffect(() => {
 		if(currentDialogId) {
@@ -54,6 +60,9 @@ const Dialogs = (
 			items={items}
 			isLoading={isLoading && !user}
 			handleRemoveMessage={removeMessageById}
+			setPreviewImage={setPreviewImage}
+			previewImage={previewImage}
+			onClosePreviewImage={onClosePreviewImage}
 		/>
 	)
 };

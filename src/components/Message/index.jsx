@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Popover, Button } from 'antd';
+import { EyeOutlined, MoreOutlined } from '@ant-design/icons';
 import { Emoji } from 'emoji-mart';
 import reactStringReplace from 'react-string-replace';
 
@@ -59,7 +60,7 @@ const MessageAudio = ({ audioSrc }) => {
 	return (
 		<div className='message-content__audio'>
 			<audio ref={audioEl} src={audioSrc} preload='metadata'/>
-			<div className='message-content__audio-progress' style={{width: progress + '%'}}></div>
+			<div className='message-content__audio-progress' style={{width: progress + '%'}}/>
 			<div className='message-content__audio-wrap'>
 				<button onClick={audioPlay} className='message-content__audio-btn'>
 					{isPlaying ?
@@ -78,14 +79,42 @@ const Message = (
 		user,
 		avatar,
 		text,
-		audio,
 		createdAt,
 		isMe,
 		unread,
 		attachments,
 		isTyping,
 		handleRemoveMessage,
+		setPreviewImage,
 	}) => {
+
+	const renderAttachment = item => {
+		if (item.ext !== 'webm') {
+			return (
+				<div key={item._id} className='attachments-item'>
+					<div className='attachments-item__overlay'>
+						<button
+							onClick={() => setPreviewImage(item.url)}
+							className='attachments-item__btn'
+						>
+							<EyeOutlined
+								className='attachments-item__icon'
+							/>
+						</button>
+					</div>
+					<img src={item.url} alt={item.filename}/>
+				</div>
+			);
+		} else {
+			return <MessageAudio key={item._id} audioSrc={item.url}/>
+		}
+	}
+
+	const isAudio = () => {
+		const file = attachments[0];
+		return attachments.length && file.ext === 'webm';
+	}
+
 
 	return(
 		<div className={
@@ -93,8 +122,8 @@ const Message = (
 				{
 					'message--my' : isMe,
 					'message--typing' : isTyping,
-					'message--image' : !text && attachments && attachments.length === 1,
-					'message--audio' : audio,
+					'message--image' : !isAudio(attachments) && !text && attachments && attachments.length === 1,
+					'message--audio' : isAudio(),
 				})
 		}>
 			<div className="message-avatar">
@@ -102,17 +131,28 @@ const Message = (
 				{/*<img className='message-avatar__img' src={avatar} alt={`Avatar ${user.fullName}`}/>*/}
 			</div>
 
-			<Popover
-				placement="bottomRight"
-				content={
-					<Button onClick={handleRemoveMessage}>Delete Message</Button>
-				}
-				trigger="click"
-			>
-				<Button>BR</Button>
-			</Popover>
 
 			<div className="message-content">
+
+				{isMe && (
+					<Popover
+						placement="bottomRight"
+						content={
+							<Button onClick={handleRemoveMessage}>Delete Message</Button>
+						}
+						trigger="click"
+					>
+						<button
+							className='message-more__btn'
+							title='Options'
+						>
+							<MoreOutlined
+								className='message-more__icon'
+							/>
+						</button>
+					</Popover>
+				)}
+
 				<div className="message-content__bubble">
 					{text && (
 						//Todo this is not a good practice
@@ -123,23 +163,17 @@ const Message = (
 						</p>
 					)}
 
-					{audio && (<MessageAudio audioSrc={audio}/>)}
-
 					{attachments.length > 0 && (
-						<div className='message-content__attachments'>
-							{attachments.map((item, index) => (
-								<div key={index} className='message-content__attachments-item'>
-									<img src={item.url} alt={item.filename}/>
-								</div>
-							))}
+						<div className='message-content__attachments attachments'>
+							{attachments.map(item => renderAttachment(item))}
 						</div>
 					)}
 
 					{isTyping && (
 						<div className='message-content--typing'>
-							<span className='dot one'></span>
-							<span className='dot two'></span>
-							<span className='dot three'></span>
+							<span className='dot one'/>
+							<span className='dot two'/>
+							<span className='dot three'/>
 						</div>
 					)}
 				</div>

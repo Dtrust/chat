@@ -2,7 +2,7 @@ import React from 'react';
 import { UploadField } from '@navjobs/upload'
 
 import { Input, Typography } from 'antd';
-import { SmileOutlined, PaperClipOutlined, AudioOutlined, SendOutlined, CloseCircleFilled } from '@ant-design/icons/lib/icons';
+import { SmileOutlined, PaperClipOutlined, AudioOutlined, SendOutlined, CloseCircleFilled, LoadingOutlined } from '@ant-design/icons/lib/icons';
 import { Picker } from 'emoji-mart';
 
 import { UploadFiles } from '../../components';
@@ -26,11 +26,13 @@ const DialogInput = props => {
 		attachments,
 		removeAttachment,
 		onSelectFiles,
+		handleSendMessage,
 		sendMessage,
-		onKeySendMessage,
 		onRecord,
 		isRecord,
-		onStopRecord
+		onStopRecord,
+		onHideRecord,
+		isLoading
 	} = props;
 
 	return (
@@ -45,7 +47,7 @@ const DialogInput = props => {
 						Recording...
 					</Text>
 					<button
-						onClick={onStopRecord}
+						onClick={onHideRecord}
 					>
 						<CloseCircleFilled
 							style={{ color: 'rgba(230,30,55,1)' }}
@@ -62,7 +64,7 @@ const DialogInput = props => {
 					</div>
 					<TextArea
 						onChange={e => setValue(e.target.value)}
-						onKeyUp={onKeySendMessage}
+						onKeyUp={handleSendMessage}
 						className='dialog-input__field'
 						size='large'
 						value={value}
@@ -95,7 +97,9 @@ const DialogInput = props => {
 						<PaperClipOutlined />
 					</button>
 				</UploadField>
-				{isRecord || value ? (
+				{isLoading ? (
+					<LoadingOutlined />
+				) : (isRecord || value || attachments.length) ? (
 					<button
 						className='dialog-input__actions-btn btn-send'
 						onClick={sendMessage}

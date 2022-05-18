@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames'
 
-import { Empty, Spin } from 'antd';
+import { Empty, Spin, Modal } from 'antd';
 
 import { Message } from '../';
 
 import background from '../../assets/img/chat-bg.jpg';
 
 
-const Messages = ({ handleRemoveMessage, blockRef, isLoading, items, user }) => {
+const Messages = ({ handleRemoveMessage, blockRef, isLoading, items, user, previewImage, setPreviewImage, onClosePreviewImage }) => {
 
 	return (
 		<div
@@ -22,7 +22,7 @@ const Messages = ({ handleRemoveMessage, blockRef, isLoading, items, user }) => 
 			}
 			style={{backgroundImage:`linear-gradient(rgba(238, 238, 238, 0.7), rgba(238, 238, 238, 0.7)), url(${background})`}}
 		>
-			{isLoading ? (
+			{isLoading && !user ? (
 				<Spin size='large' tip="Loading messages..."/>
 			) : items && !isLoading ? (
 				items.length > 0 ? (
@@ -32,6 +32,7 @@ const Messages = ({ handleRemoveMessage, blockRef, isLoading, items, user }) => 
 							{...item}
 							isMe={user._id === item.user._id}
 							handleRemoveMessage={handleRemoveMessage.bind(this, item._id)}
+							setPreviewImage={setPreviewImage}
 						/>
 					))
 				) : (
@@ -40,6 +41,13 @@ const Messages = ({ handleRemoveMessage, blockRef, isLoading, items, user }) => 
 			) : (
 				<Empty description='Please, open dialog'/>
 			)}
+			<Modal
+				footer={null}
+				visible={previewImage}
+				onCancel={onClosePreviewImage}
+			>
+				<img src={previewImage} style={{width: '100%'}} alt='preview'/>
+			</Modal>
 		</div>
 	)
 
