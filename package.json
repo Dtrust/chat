@@ -1,5 +1,7 @@
 {
   "name": "chat",
+  "author": "Dennis Dovziy <1044442@gmail.com> (https://github.com/Dtrust)",
+  "license": "MIT",
   "version": "0.0.1",
   "engines": {
     "node": "14.x",
@@ -82,8 +84,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "heroku-postbuild": "node scripts/build.js"
+    "test": "node scripts/test.js"
   },
   "eslintConfig": {
     "extends": [
