@@ -64,6 +64,7 @@
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^12.3.0",
     "semver": "^7.3.5",
+    "serve": "^13.0.2",
     "socket.io-client": "^4.4.1",
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.3.1",
@@ -81,10 +82,12 @@
     "npm": "6.14.13"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "heroku-postbuild": "node scripts/build.js"
+    "dev": "react-scripts start",
+    "start": "serve -s build",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
   },
   "eslintConfig": {
     "extends": [
