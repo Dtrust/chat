@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+
 import { filesApi } from '../utils/api';
+import socket from '../core/socket';
 
 import { DialogInput as DialogInputBase } from '../components';
 import { messagesActions, attachmentsActions } from '../redux/actions';
@@ -143,7 +145,9 @@ const DialogInput = props => {
 	};
 
 	const handleSendMessage = (e) => {
-		// sendMessage();
+
+		socket.emit('DIALOGS:TYPING', {dialogId: currentDialogId, user});
+
 		if (e.keyCode === 13) {
 			sendMessage();
 		}
@@ -173,6 +177,7 @@ const DialogInput = props => {
 		handleSendMessage={handleSendMessage}
 		attachments={attachments}
 		onSelectFiles={onSelectFiles}
+		removeAttachment={removeAttachment}
 		sendMessage={sendMessage}
 		isRecord={isRecord}
 		onRecord={onRecord}

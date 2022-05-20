@@ -5,7 +5,7 @@ import { Block } from '../../../components';
 import userApi from '../../../utils/api/user';
 
 
-const resultRender = (hash, verified) => {
+const resultRender = ({ hash, verified }) => {
 	if (hash) {
 		if (verified) {
 			return {

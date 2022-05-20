@@ -1,4 +1,5 @@
 import { dialogsApi } from '../../utils/api';
+import socket from '../../core/socket';
 
 
 const actions = {
@@ -6,10 +7,22 @@ const actions = {
 		type: 'DIALOGS:SET_ITEMS',
 		payload: items,
 	}),
-	setCurrentDialogId: id => ({
-		type: 'DIALOGS:SET_CURRENT_DIALOG_ID',
-		payload: id,
+	updateReadStatus: ({ userId, dialogId }) => ({
+		type: 'DIALOGS:LAST_MESSAGE_READ_STATUS',
+		payload: {
+			userId,
+			dialogId,
+		},
 	}),
+	setCurrentDialogId: id => dispatch => {
+
+		socket.emit('DIALOGS:JOIN', id);
+
+		dispatch({
+			type: 'DIALOGS:SET_CURRENT_DIALOG_ID',
+			payload: id,
+		})
+	},
 	fetchDialogs: () => dispatch => {
 		dialogsApi.getAll().then(({ data }) => {
 			dispatch(actions.setDialogs(data));

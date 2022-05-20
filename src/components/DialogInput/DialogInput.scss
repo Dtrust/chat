@@ -16,14 +16,18 @@
     width: 100%;
     padding: $-padding;
     background: rgba(255, 255, 255, 1);
-    @include flexCenter;
+    //@include flexCenter;
     &__field{
-      padding-left: 40px!important;
+      padding-left: 50px!important;
       padding-right: 70px!important;
       border-radius: $-border-radius!important;
     }
     &__wrap{
       width: 100%;
+      position: relative;
+    }
+    & .upload{
+      margin-top: 10px;
     }
     &__btn,
     &__actions{

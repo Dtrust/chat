@@ -45,20 +45,19 @@ const actions = {
 			}
 			return data;
 		}).catch(({response}) => {
-			if (response.status === 403) {
-				openNotification({
-					title: 'Authorisation Error',
-					text: 'Incorrect E-mail or Password',
-					type: 'error',
-				})
-			}
+			openNotification({
+				title: 'Authorisation Error',
+				text: 'Incorrect E-mail or Password',
+				type: 'error',
+			})
 		})
 	},
-	fetchUserSignup: postData => dispatch => {
-		return userApi.signUp(postData).then(({ data }) => {
-			console.log(data)
-			return data
-		})
+	fetchUserSignup: postData => () => {
+		// return userApi.signUp(postData).then(({ data }) => {
+		// 	console.log(data)
+		// 	return data
+		// })
+		return userApi.signUp(postData);
 	}
 }
 

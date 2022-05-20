@@ -7,7 +7,7 @@ import socket from '../core/socket';
 import { Dialogs as BaseDialogs } from '../components';
 
 
-const Dialogs = ({ fetchDialogs, currentDialogId, setCurrentDialogId, items, userId }) => {
+const Dialogs = ({ fetchDialogs, currentDialogId, updateReadStatus, setCurrentDialogId, items, userId }) => {
 
 	const [inputValue, setValue] = useState('');
 	const [filtered, setFilteredItems] = useState(Array.from(items));
@@ -43,6 +43,7 @@ const Dialogs = ({ fetchDialogs, currentDialogId, setCurrentDialogId, items, use
 		// }
 		socket.on("SERVER:DIALOG_CREATED",  getNewDialogs);
 		socket.on("SERVER:NEW_MESSAGE",  getNewDialogs);
+		socket.on('SERVER:MESSAGES_READ', updateReadStatus);
 
 		return () => {
 			socket.removeListener('SERVER:DIALOG_CREATED', getNewDialogs);

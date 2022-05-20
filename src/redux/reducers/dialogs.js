@@ -12,6 +12,16 @@ export default (state = initialState, { type, payload }) => {
 				...state,
 				items: payload
 			};
+		case 'DIALOGS:LAST_MESSAGE_READ_STATUS':
+			return {
+				...state,
+				items: state.items.map(dialog => {
+					if (dialog._id === payload.dialogId) {
+						dialog.lastMessage.unread = false;
+					}
+					return dialog;
+				}),
+			};
 		case 'DIALOGS:SET_CURRENT_DIALOG_ID':
 			return {
 				...state,

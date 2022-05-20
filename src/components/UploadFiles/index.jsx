@@ -45,7 +45,7 @@ const UploadFiles = ({ attachments, removeAttachment }) => {
 		});
 
 	return (
-		<div>
+		<div className='upload'>
 			<Upload
 				action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
 				listType="picture-card"
@@ -68,5 +68,6 @@ const UploadFiles = ({ attachments, removeAttachment }) => {
 UploadFiles.defaultProps = {
 	attachments: []
 };
+
 
 export default UploadFiles;

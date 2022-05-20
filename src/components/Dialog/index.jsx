@@ -9,7 +9,21 @@ import { Message } from '../';
 import background from '../../assets/img/chat-bg.jpg';
 
 
-const Messages = ({ handleRemoveMessage, blockRef, isLoading, items, user, previewImage, setPreviewImage, onClosePreviewImage }) => {
+const Dialog = props => {
+
+	const {
+		handleRemoveMessage,
+		blockRef,
+		isLoading,
+		items,
+		user,
+		previewImage,
+		setPreviewImage,
+		onClosePreviewImage,
+		dialogHeight,
+		isTyping,
+		partner
+	} = props;
 
 	return (
 		<div
@@ -20,7 +34,10 @@ const Messages = ({ handleRemoveMessage, blockRef, isLoading, items, user, previ
 					'dialog-content--empty': !items || items.length === 0,
 				})
 			}
-			style={{backgroundImage:`linear-gradient(rgba(238, 238, 238, 0.7), rgba(238, 238, 238, 0.7)), url(${background})`}}
+			style={{
+				backgroundImage:`linear-gradient(rgba(238, 238, 238, 0.7), rgba(238, 238, 238, 0.7)), url(${background})`,
+				height: `calc(100% - ${dialogHeight}px)`
+			}}
 		>
 			{isLoading && !user ? (
 				<Spin size='large' tip="Loading messages..."/>
@@ -33,6 +50,8 @@ const Messages = ({ handleRemoveMessage, blockRef, isLoading, items, user, previ
 							isMe={user._id === item.user._id}
 							handleRemoveMessage={handleRemoveMessage.bind(this, item._id)}
 							setPreviewImage={setPreviewImage}
+							// isTyping={isTyping}
+							// partner={partner}
 						/>
 					))
 				) : (
@@ -40,6 +59,19 @@ const Messages = ({ handleRemoveMessage, blockRef, isLoading, items, user, previ
 				)
 			) : (
 				<Empty description='Please, open dialog'/>
+			)}
+			{isTyping && (
+				<Message
+					isTyping={true}
+					user={partner}
+					isMe={false}
+					attachments={0}
+					handleRemoveMessage={null}
+					setPreviewImage={null}
+					text={null}
+					createdAt={null}
+					unread={false}
+				/>
 			)}
 			<Modal
 				footer={null}
@@ -53,8 +85,8 @@ const Messages = ({ handleRemoveMessage, blockRef, isLoading, items, user, previ
 
 }
 
-Messages.propTypes = {
+Dialog.propTypes = {
 	items: PropTypes.array,
 }
 
-export default Messages
+export default Dialog

@@ -74,8 +74,9 @@ const MessageAudio = ({ audioSrc }) => {
 	)
 }
 
-const Message = (
-	{
+const Message = props => {
+
+	const {
 		user,
 		avatar,
 		text,
@@ -86,7 +87,7 @@ const Message = (
 		isTyping,
 		handleRemoveMessage,
 		setPreviewImage,
-	}) => {
+	} = props
 
 	const renderAttachment = item => {
 		if (item.ext !== 'webm') {
@@ -111,8 +112,12 @@ const Message = (
 	}
 
 	const isAudio = () => {
-		const file = attachments[0];
-		return attachments.length && file.ext === 'webm';
+		if (attachments) {
+			const file = attachments[0];
+			return attachments.length && file.ext === 'webm';
+		} else {
+			return null
+		}
 	}
 
 

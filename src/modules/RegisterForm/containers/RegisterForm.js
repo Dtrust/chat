@@ -3,7 +3,8 @@ import { withFormik } from 'formik';
 import validate from '../../../utils/validate'
 import RegisterForm from '../components/RegisterForm';
 import store from '../../../redux/store';
-import {userActions} from '../../../redux/actions';
+import { userActions } from '../../../redux/actions';
+import { openNotification } from '../../../utils/helpers';
 
 
 export default withFormik({
@@ -31,7 +32,25 @@ export default withFormik({
 			}
 			setSubmitting(false);
 		})
-		.catch(() => {
+		.catch((err) => {
+			if (
+				typeof err.response.data.message !== 'string' &&
+				err.response.data.message.errmsg.indexOf('dup') >= 0
+			) {
+				openNotification({
+					title: 'Error',
+					text: 'This E-mail already exists',
+					type: 'error',
+					duration: 5000,
+				});
+			} else {
+				openNotification({
+					title: 'Error',
+					text: 'Server Error. Please try again later',
+					type: 'error',
+					duration: 5000,
+				});
+			}
 			setSubmitting(false);
 		})
 	},
