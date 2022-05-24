@@ -1,4 +1,5 @@
 import { withFormik } from 'formik';
+import get from 'lodash/get';
 
 import validate from '../../../utils/validate'
 import RegisterForm from '../components/RegisterForm';
@@ -24,19 +25,18 @@ export default withFormik({
 	},
 
 	handleSubmit: (values, { setSubmitting, props }) => {
-		store.dispatch(userActions.fetchUserSignup(values)).then(({ status }) => {
-			if (status === 'success') {
-				setTimeout(() => {
-					props.history.push('/');
-				}, 3000);
-			}
+		store.dispatch(userActions.fetchUserSignup(values)).then(() => {
+			// if (status === 'success') {
+			// 	setTimeout(() => {
+			// 		props.history.push('/signup/verify');
+			// 	}, 3000);
+			// }
+			console.log(values)
+			props.history.push('/signup/verify');
 			setSubmitting(false);
 		})
 		.catch((err) => {
-			if (
-				typeof err.response.data.message !== 'string' &&
-				err.response.data.message.errmsg.indexOf('dup') >= 0
-			) {
+			if (get(err, 'response.data.message.errmsg', '').indexOf('dup') >= 0) {
 				openNotification({
 					title: 'Error',
 					text: 'This E-mail already exists',

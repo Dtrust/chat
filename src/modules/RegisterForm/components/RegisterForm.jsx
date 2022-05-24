@@ -6,9 +6,9 @@ import { UserOutlined, LockOutlined, InfoCircleOutlined, MailOutlined } from '@a
 import { Button, Block, FormField } from '../../../components';
 
 
-const RegisterForm = props => {
+const success = false;
 
-	const success = false;
+const RegisterForm = props => {
 
 	const {
 		values,
@@ -94,7 +94,7 @@ const RegisterForm = props => {
 							>
 								Signup
 							</Button>
-							Or <Link to='/'>Log in!</Link>
+							Or <Link to='/signin'>Log in</Link>
 						</Form.Item>
 					</Form>) : (
 					<div className='auth-success'>

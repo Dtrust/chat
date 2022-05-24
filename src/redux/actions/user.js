@@ -25,26 +25,21 @@ const actions = {
 	fetchUserLogin: postData => dispatch => {
 		return userApi.login(postData).then(({ data }) => {
 
-			const {status, token} = data;
+			const {token} = data;
 
-			if (status === 'error') {
-				openNotification({
-					title: 'Authorisation Error',
-					text: 'Incorrect E-mail or Password',
-					type: 'error',
-				})
-			} else {
-				openNotification({
-					title: 'Success',
-					type: 'success',
-				})
-				window.axios.defaults.headers.common['token'] = token;
-				window.localStorage['token'] = token;
-				dispatch(actions.fetchUserData());
-				dispatch(actions.setIsAuth(true));
-			}
-			return data;
-		}).catch(({response}) => {
+			openNotification({
+				title: 'Success',
+				type: 'success',
+			})
+
+			window.axios.defaults.headers.common['token'] = token;
+			window.localStorage['token'] = token;
+
+			dispatch(actions.fetchUserData());
+			dispatch(actions.setIsAuth(true));
+			return data
+
+		}).catch(() => {
 			openNotification({
 				title: 'Authorisation Error',
 				text: 'Incorrect E-mail or Password',
@@ -57,6 +52,7 @@ const actions = {
 		// 	console.log(data)
 		// 	return data
 		// })
+		console.log(postData)
 		return userApi.signUp(postData);
 	}
 }
