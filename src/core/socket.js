@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 
-const socket = io('http://chat-server-dennis.herokuapp.com',
+const socket = io('https://chat-server-dennis.herokuapp.com',
 	{
 		// withCredentials: true,
 		// extraHeaders: {
