@@ -13,7 +13,6 @@ const actions = {
 	}),
 	fetchUserData: () => dispatch => {
 		userApi.getMe().then(({ data }) => {
-			console.log(data)
 			dispatch(actions.setUserData(data));
 		}).catch(err => {
 			if(err.response.status === 403) {
@@ -31,7 +30,7 @@ const actions = {
 				title: 'Success',
 				type: 'success',
 			})
-
+			//ToDo probably is a problem with cors
 			window.axios.defaults.headers.common['token'] = token;
 			window.localStorage['token'] = token;
 
